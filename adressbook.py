@@ -1,4 +1,5 @@
 import tkinter
+import tkinter.messagebox
 from tkinter.filedialog import *
 
 screen = tkinter.Tk()
@@ -28,6 +29,33 @@ def refresh():
     for name in names:
         listbox.insert(tkinter.END,name)
 
+def showinfo(event):
+    index = listbox.curselection()
+    name =listbox.get(index)
+    infobox = information[name]
+    tkinter.messagebox.showinfo("bye","name:  "+name+"\naddress:  "+infobox[0]+"\nmobile:  "+infobox[1]+"\nemail: "+infobox[2]+"\nbirthday:  "+infobox[3])
+
+def delete():
+    index = listbox.curselection()
+    name = listbox.get(index)
+    del information[name]
+    refresh()
+    
+def save():
+    global information
+    file1 = asksaveasfile()
+    if file1 is not None:
+        print(information,file=file1)
+    else:
+        tkinter.messagebox.showerror("np","file not saved")
+
+def open():    
+    global information
+    file1 = askopenfile()
+    if file1 is not None:
+        items=file1.readlines()
+        information = eval(items[0])
+        refresh()
 
 def click():
     print(7)
@@ -53,19 +81,19 @@ label6.place(x= 300,y=450)
 
 
 #buttons
-button= tkinter.Button(screen,text = "open",command= click)
+button= tkinter.Button(screen,text = "open",command= open)
 button.place(x=300,y = 20)
 
 button1= tkinter.Button(screen,text = "edit",command= click)
 button1.place(x=25,y = 500)
 
-button2= tkinter.Button(screen,text = "delete",command= click)
+button2= tkinter.Button(screen,text = "delete",command= delete)
 button2.place(x=150,y = 500)
 
 button3= tkinter.Button(screen,text = "update",command= update)
 button3.place(x=400,y = 500)
 
-button4= tkinter.Button(screen,text = "save",command= click)
+button4= tkinter.Button(screen,text = "save",command= save)
 button4.place(x=280,y = 500)
 
 #entry
@@ -88,5 +116,6 @@ entry4.place(x=400,y=450)
 
 listbox = tkinter.Listbox(screen,width=23,height=24)
 listbox.place(x=20,y=80)
+listbox.bind("<<ListboxSelect>>",showinfo)
 
 screen.mainloop()
