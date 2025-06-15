@@ -57,8 +57,16 @@ def open():
         information = eval(items[0])
         refresh()
 
-def click():
-    print(7)
+def edit():
+    index = listbox.curselection()
+    name = listbox.get(index)
+    record = information[name]
+    entry.insert(tkinter.END,name)
+    entry1.insert(tkinter.END,record[0])
+    entry2.insert(tkinter.END,record[1])
+    entry3.insert(tkinter.END,record[2])
+    entry4.insert(tkinter.END,record[3])
+
 
 #labels
 label1 = tkinter.Label(screen,text = "My address book:")
@@ -84,7 +92,7 @@ label6.place(x= 300,y=450)
 button= tkinter.Button(screen,text = "open",command= open)
 button.place(x=300,y = 20)
 
-button1= tkinter.Button(screen,text = "edit",command= click)
+button1= tkinter.Button(screen,text = "edit",command= edit)
 button1.place(x=25,y = 500)
 
 button2= tkinter.Button(screen,text = "delete",command= delete)
