@@ -1,5 +1,6 @@
 import tkinter
 import random
+import tkinter.messagebox
 
 screen = tkinter.Tk()
 screen.geometry("400x400")
@@ -9,13 +10,34 @@ def open(selected):
     if selected in button:
         button.remove(selected)
         selected.config(text = "X")
+        winner()
         chosen = random.choice(button)
         button.remove(chosen)
         chosen.config(text="o")
+        winner()
+def winner():
+    for wc in winning_combos:
+        if wc[0]["text"] == "X" and wc[1]["text"] == "X" and wc[2]["text"] == "X":
+            tkinter.messagebox.showinfo("wsp","Player wins!")
+
+        elif wc[0]["text"] == "o" and wc[1]["text"] == "o" and wc[2]["text"] == "o":
+            tkinter.messagebox.showinfo("wsp","Robot wins wins!")
+
+    if len(button) == 0:
+        tkinter.messagebox.showinfo("hello","It's a tie!")
 
 
+seconds = 0
+def timer():
+    global seconds
+    seconds = seconds+1
+    label.config(text=seconds)
+    label.after(1000,timer)
 
 #buttons
+
+label = tkinter.Label(screen,text = seconds)
+label.place(x= 150,y=350)
 
 button1= tkinter.Button(screen,command=lambda:open(button1),padx = 30,pady = 30)
 button1.place(x=20,y = 20)
@@ -45,5 +67,6 @@ button9= tkinter.Button(screen,command=lambda:open(button9),padx = 30,pady = 30)
 button9.place(x=220,y = 220)
 
 button = [button1,button2,button3,button4,button5,button6,button7,button8,button9]
-
+winning_combos = [[button1,button2,button3],[button4,button5,button6],[button7,button8,button9],[button1,button4,button7],[button2,button5,button8],[button3,button6,button9],[button1,button5,button9],[button3,button5,button7]]
+timer()
 screen.mainloop()
