@@ -26,6 +26,7 @@ def items():
 def checking():
     global word,score
     pword = entry.get() 
+    entry.delete(0,tkinter.END)
     if pword == word:
         score+=1
         label2.config(text=str(score))
@@ -38,7 +39,7 @@ def checking():
 label1 = tkinter.Label(screen,text = "jumbled word game!",font=("verdana",20,"normal"))
 label1.place(x= 100,y=20)
 
-label2 = tkinter.Label(screen,text = "score")
+label2 = tkinter.Label(screen,text = "0")
 label2.place(x= 20,y=350)
 
 label3 = tkinter.Label(screen,text = "0",font=("verdana",20,"normal"))
